@@ -27,10 +27,7 @@ SECRET_KEY = "o8+sr-&ir!z%2&lca4f%yp14u)*r0xxsslv@nfko$_2+)^9up#"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "banker-api-nilesh.herokuapp.com"]
 
 
 # Application definition
