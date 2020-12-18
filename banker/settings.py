@@ -27,7 +27,7 @@ SECRET_KEY = "o8+sr-&ir!z%2&lca4f%yp14u)*r0xxsslv@nfko$_2+)^9up#"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "banker-api-nilesh.herokuapp.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "banker-api-nilesh.herokuapp.com", "0.0.0.0"]
 
 
 # Application definition
@@ -84,8 +84,12 @@ WSGI_APPLICATION = "banker.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "d63drph7l5gjsp",
+        "HOST": "ec2-54-211-99-192.compute-1.amazonaws.com",
+        "PORT": 5432,
+        "USER": "dphuusdwsvivxb",
+        "PASSWORD": "6b4c002f1d36f26c3a16cf25a20c18e10578c55ce5e05fc3ee52ec0d888410b5",
     }
 }
 
