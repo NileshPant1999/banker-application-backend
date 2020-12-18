@@ -4,17 +4,17 @@ from django.http import JsonResponse, HttpResponse
 
 
 class ApiRoot(APIView):
-
     def get(self, request):
-        return JsonResponse({"message": "go to endpoints api/branches/autocomplete or api/branches"})
+        return JsonResponse(
+            {"message": "go to endpoints api/branches/autocomplete or api/branches"}
+        )
 
 
 class SearchByBranch(APIView):
-
     def get(self, request):
-        q = self.request.query_params.get('q')
-        limit = self.request.query_params.get('limit')
-        offset = self.request.query_params.get('offset')
+        q = self.request.query_params.get("q")
+        limit = self.request.query_params.get("limit")
+        offset = self.request.query_params.get("offset")
         if q is None:
             return JsonResponse({"message": "Enter Valid Data"})
         data = BankDetails.objects.all()
@@ -22,7 +22,16 @@ class SearchByBranch(APIView):
         response_data = {"branches": []}
         for i in data:
             if q.lower() in i.branch.lower():
-                temp_dict = {"ifsc": i.ifsc, "bank_id": i.bank_id, "branch": i.branch, "address": i.address, "city": i.city, "district": i.district, "state": i.state}
+                temp_dict = {
+                    "ifsc": i.ifsc,
+                    "bank_id": i.bank_id,
+                    "branch": i.branch,
+                    "address": i.address,
+                    "city": i.city,
+                    "district": i.district,
+                    "state": i.state,
+                    "bank_name": i.bank_name,
+                }
                 temp_list.append(temp_dict.copy())
         if len(temp_list) == 0:
             return JsonResponse(response_data)
@@ -32,8 +41,8 @@ class SearchByBranch(APIView):
             if offset < len(temp_list):
                 if limit == 0:
                     response_data = {"branches": []}
-                elif (offset+limit) < len(temp_list):
-                    response_data = {"branches": temp_list[offset:offset+limit]}
+                elif (offset + limit) < len(temp_list):
+                    response_data = {"branches": temp_list[offset : offset + limit]}
                 else:
                     response_data = {"branches": temp_list[offset:]}
             return JsonResponse(response_data)
@@ -56,19 +65,36 @@ class SearchByBranch(APIView):
 
 
 class SearchByAll(APIView):
-
     def get(self, request):
-        q = self.request.query_params.get('q')
-        limit = self.request.query_params.get('limit')
-        offset = self.request.query_params.get('offset')
+        q = self.request.query_params.get("q")
+        limit = self.request.query_params.get("limit")
+        offset = self.request.query_params.get("offset")
         if q is None:
             return JsonResponse({"message": "Enter Valid Data"})
         data = BankDetails.objects.all()
         temp_list = []
         response_data = {"branches": []}
         for i in data:
-            if q == i.ifsc or q == i.bank_id or q.lower() in i.branch.lower() or q.lower() in i.address.lower() or q.lower() in i.city.lower() or q.lower() in i.district.lower() or q.lower() in i.state.lower():
-                temp_dict = {"ifsc": i.ifsc, "bank_id": i.bank_id, "branch": i.branch, "address": i.address, "city": i.city, "district": i.district, "state": i.state}
+            if (
+                q == i.ifsc
+                or q == i.bank_id
+                or q.lower() in i.branch.lower()
+                or q.lower() in i.address.lower()
+                or q.lower() in i.city.lower()
+                or q.lower() in i.district.lower()
+                or q.lower() in i.state.lower()
+                or q.lower() in i.bank_name.lower()
+            ):
+                temp_dict = {
+                    "ifsc": i.ifsc,
+                    "bank_id": i.bank_id,
+                    "branch": i.branch,
+                    "address": i.address,
+                    "city": i.city,
+                    "district": i.district,
+                    "state": i.state,
+                    "bank_name": i.bank_name,
+                }
                 temp_list.append(temp_dict.copy())
         if len(temp_list) == 0:
             return JsonResponse(response_data)
@@ -79,7 +105,7 @@ class SearchByAll(APIView):
                 if limit == 0:
                     response_data = {"branches": []}
                 elif (offset + limit) < len(temp_list):
-                    response_data = {"branches": temp_list[offset:offset + limit]}
+                    response_data = {"branches": temp_list[offset : offset + limit]}
                 else:
                     response_data = {"branches": temp_list[offset:]}
             return JsonResponse(response_data)
