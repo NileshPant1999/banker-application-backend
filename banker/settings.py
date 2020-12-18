@@ -56,7 +56,10 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = ("http://localhost:3000",)
+CORS_ORIGIN_WHITELIST = (
+    "http://localhost:3000",
+    "https://banker-frontend.herokuapp.com/",
+)
 
 ROOT_URLCONF = "banker.urls"
 
